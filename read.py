@@ -1,11 +1,10 @@
 import cv2 as cv
-from EssentialCV import Colors  
-import numpy as np
+from utils.csplit import Colors
 
 class Read():
 	def start_read():
 		img = cv.imread('data/Photos/cats.jpg')
-		blue_1, green_1, red_1 = Colors.colorsplit(img, "1")
+		blue_1, green_1, red_1 = Colors.colorsplit(img, 1)
 		
 		merged = cv.merge([blue_1,green_1,red_1])
 		
