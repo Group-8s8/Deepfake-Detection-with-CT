@@ -1,5 +1,7 @@
 import cv2 as cv
 
+#uselss and doesn't work as expected.
+
 class Colors:
 
 	def colorsplit(img, depth):

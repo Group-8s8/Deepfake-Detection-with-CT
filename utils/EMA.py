@@ -3,6 +3,7 @@ import numpy as np
 
 class EM():
 	def guassian_distribution(x, mu, sigma):
+		# equation 3 from the paper.
 		_z = ((x - mu) / sigma)**2
 		_exp = np.exp(_z)
 		_b = 2 * np.pi * sigma**2
