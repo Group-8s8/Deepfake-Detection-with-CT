@@ -5,8 +5,9 @@
 * Everything I do is commented on where needed. read them. 
 
 ## ToDo.
-
-[] - Check if the current equations are correct and bounds are set correctly.
-[] - More equations.
-[] - EM Algorithm.
-[] - Classifier
+- [] - Equation 3 and Bayes.
+- [] - Equation 1.
+- [] - Check if the current equations are correct and bounds are set correctly.
+- [] - More equations.
+- [] - EM Algorithm.
+- [] - Classifier
