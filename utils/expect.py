@@ -51,7 +51,7 @@ class EM():
 				W[x][y] = P[x][y]/(P[x][y] + PZERO)
 
 			#m-step
-
+				#to be completed.
 
 
 
