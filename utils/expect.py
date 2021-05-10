@@ -53,8 +53,8 @@ class EM():
 			sigmasqr = "Some Value is calcuted here to give the varience (sigma square)" # DONT KNOW HOW THIS IS CALCULATED
 
 			sigma = np.sqrt(sigmasqr) #this sigma value is passed to next iteration
-				#to be completed.
 
+			# checking if it satisfies eq 1 and concluding whether its from Model 1 or 2.
 			if img[x][y] == EM.convolve(img)[x][y]:
 				# belongs to M1
 			else:
