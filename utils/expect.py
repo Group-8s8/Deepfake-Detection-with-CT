@@ -16,8 +16,8 @@ class Initialize():
 		#setting p0 and coordinates
 		indices = np.where(img != [0])
 		COORDINATES = zip(indices[0], indices[1])
-		PZERO = 1/100 #len(COORDINATES)
-		ALPHA = N #DONT KNOW WHAT IS ALPHA
+		PZERO = 1/len(indices)
+		ALPHA = 2 #DONT KNOW WHAT IS ALPHA. Passing value <= kernel size N
 		return SIGMAZERO,R,P,W,K,PZERO,COORDINATES,ALPHA
 
 class EM():
