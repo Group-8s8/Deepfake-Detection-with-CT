@@ -48,10 +48,10 @@ class EM():
 				#gd eq
 				P[x][y] = GD.guassian_distribution(R[x][y], sigma)
 				W[x][y] = P[x][y]/(P[x][y] + PZERO)
-
+			print(W)
 			print(n)
 			sigma = sigma + 1
-		print(W) # Why is everything 0
+		 # Why is everything 0
 		'''
 			#m-step
 			
