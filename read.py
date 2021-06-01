@@ -62,6 +62,9 @@ class EM():
 			bsum = np.zeros(shape = (3,3),dtype = np.float32)
 			csum = np.zeros(shape = (3,3),dtype = np.float32)
 			BETA = np.zeros(shape = (3,3),dtype = np.float32)
+
+			#program is really slow in the below loop.
+			
 			for x,y in COORDINATES:
 				for p in range(-ALPHA,ALPHA+1):
 					for q in range(-ALPHA,ALPHA+1):
