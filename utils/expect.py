@@ -4,7 +4,7 @@ import cv2 as cv
 class Initialize():
 	def all(img):
 		N = 3 #Kernel Size
-		SIGMAZERO = 1 # Initializing with random (1)
+		SIGMAZERO = 0.5
 		#initializing R,P,W Matrices with 0. same size as img
 		R = np.zeros(img.shape, np.int8)
 		P = np.zeros(img.shape, np.int8)
@@ -16,8 +16,8 @@ class Initialize():
 		#setting p0 and coordinates
 		indices = np.where(img != [0])
 		COORDINATES = zip(indices[0], indices[1])
-		PZERO = 1/len(indices)
-		ALPHA = 2 #DONT KNOW WHAT IS ALPHA. Passing value <= kernel size N
+		PZERO = 1/256
+		ALPHA = N #DONT KNOW WHAT IS ALPHA. Passing value <= kernel size N
 		return SIGMAZERO,R,P,W,K,PZERO,COORDINATES,ALPHA
 
 class EM():
