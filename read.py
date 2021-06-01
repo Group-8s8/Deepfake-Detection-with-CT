@@ -25,33 +25,35 @@ class Initialize():
 class EM():
 	def algorithm(img):
 		SIGMAZERO,R,P,W,K,PZERO,COORDINATES,ALPHA = Initialize.all(img)
-		BETA = 0.2
-		sigma = SIGMAZERO
+		sigma = SIGMAZERO #Initially 0.5, changes after each Iteration in m-step
 		print(K)
-		for n in range(0, 2):
+		for n in range(0, 2): # 2 must be changed to 100 in real case.
 			print(f"In loop {n+1}")
 			#e-step
 			a,b,c,d,e,f,COORDINATES,g = Initialize.all(img)
+			#a,bc,d,e,f,g are all unwanted returns.
 			for x,y in COORDINATES:
 				sumo = 0
+				# This is equation 4 in the paper.
 				for p in range(-ALPHA,ALPHA+1):
-					#p = pn# + 1
 					for q in range(-ALPHA,ALPHA+1):
-						#q = qn# + 1
 						try:
 							sumo += K[p][q] * img[x + p][y + q]
 						except IndexError:
 							pass
 				temp = img[x][y] - sumo
+				# The above step gives "x-myu" for Guassian Distribution at each coordinate
+				# The below step is to make sure there is no -Ve pixel values.
 				if temp < 0:
 					R[x][y] = temp * -1
 				else:
 					R[x][y] = temp
+				# This finds the Guassian Distribution of the point
 				P[x][y] = GD.guassian_distribution(R[x][y]**2, sigma)
 				try:
+					#bayes rule is applied at each point.
 					W[x][y] = P[x][y]/(P[x][y] + PZERO)
 				except IndexError:
-					print("Error at PZ.")
 					pass
 
 			print("e-step done")
@@ -62,9 +64,9 @@ class EM():
 			bsum = np.zeros(shape = (3,3),dtype = np.float32)
 			csum = np.zeros(shape = (3,3),dtype = np.float32)
 			BETA = np.zeros(shape = (3,3),dtype = np.float32)
-
+			print("m-step starting")
 			#program is really slow in the below loop.
-			
+			# In this loop, Kernel Matrix K is remade with newer values (W) that we got from e-step and older Kernel Matrix 
 			for x,y in COORDINATES:
 				for p in range(-ALPHA,ALPHA+1):
 					for q in range(-ALPHA,ALPHA+1):
@@ -88,10 +90,10 @@ class EM():
 			for p in range(-ALPHA,ALPHA+1):
 				for q in range(-ALPHA,ALPHA+1):
 					K[p][q] = (BETA[p][q] - csum[p][q])/bsum[p][q]
-			print(K)
 
 			print("m-step progress")
 
+			# Here new Sigma value is generated from W and R.
 			sigsum = 0
 			wsum = 0
 			a,b,c,d,e,f,COORDINATES,g = Initialize.all(img)
@@ -99,23 +101,21 @@ class EM():
 				sigsum += W[x][y] * R[x][y]**2
 				wsum += W[x][y]
 
+			#Checks and corrects to avoid divide by Zero
 			if wsum < 0:
 				wsum = wsum * -1
 			sigmasqr = sigsum/wsum
-
+			# new sigma
 			sigma = np.sqrt(sigmasqr)
 			print(sigma)
 			print("m-step done")
+		# prints the final K vector after iterations
 		print(K)
-
-	def make_beta(img, W, p,q, x, y):
-		isum = 0
-						
-		return isum
 
 class GD():
 	def guassian_distribution(x, sigma):
 		_z = x / (sigma)**2
+		# Below check avoids not using higher precision floating points because float32 cannot have exponent(709+).
 		if _z < 709:
 			_exp = np.exp(_z)
 		else:
@@ -129,6 +129,7 @@ class GD():
 
 class Normal():
 	def normalize(img):
+		# Image is normalized to values between 0 and 1 so that calculations will be easier.
 		pixels = asarray(img)
 		pixels = pixels.astype('float32')
 		pixels /= 255.0
@@ -137,10 +138,13 @@ class Normal():
 
 
 if __name__ == '__main__':
+	# loads image from given path
 	img = 'data/Fake/ex.png'
 	image = Image.open(img)
+	#splits image to 3 channels. 
 	r,g,b = image.split()
 	bnormal = Normal.normalize(b)
+	#calling em algorithm per channel.
 	EM.algorithm(bnormal)
 	#Normal.normalize(g)
 	#Normal.normalize(r)
