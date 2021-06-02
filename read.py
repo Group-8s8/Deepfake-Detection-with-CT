@@ -133,7 +133,11 @@ class Normal():
 		pixels = asarray(img)
 		pixels = pixels.astype('float32')
 		# 255 is max value. so (any number < 255)/255 => 0 < number < 1
-		pixels /= 255.0
+		#pixels /= 255.0
+		#print(pixels)
+		#print(pixels.mean(),pixels.std())
+		pixels = (pixels)/ pixels.std()
+		#print(pixels)
 		
 		return pixels
 
