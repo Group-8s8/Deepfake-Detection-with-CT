@@ -110,7 +110,7 @@ class EM():
 			print(sigma)
 			print("m-step done")
 		# prints the final K vector after iterations
-		print(K)
+		return K
 
 class GD():
 	def guassian_distribution(x, sigma):
@@ -141,7 +141,6 @@ class Normal():
 		
 		return pixels
 
-
 if __name__ == '__main__':
 	# loads image from given path
 	img = 'data/Fake/ex.png'
@@ -149,8 +148,11 @@ if __name__ == '__main__':
 	#splits image to 3 channels. 
 	r,g,b = image.split()
 	bnormal = Normal.normalize(b)
+	gnormal = Normal.normalize(g)
+	rnormal = Normal.normalize(r)
 	#calling em algorithm per channel.
-	EM.algorithm(bnormal)
-	#Normal.normalize(g)
-	#Normal.normalize(r)
+	bK = EM.algorithm(bnormal)
+	gK = EM.algorithm(gnormal)
+	rK = EM.algorithm(rnormal)
+	K_vector = np.concatenate((bK, dK, rK), axis=None)
 	
