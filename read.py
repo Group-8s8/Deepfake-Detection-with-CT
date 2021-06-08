@@ -162,5 +162,11 @@ if __name__ == '__main__':
 	print("[INFO] Concatnating 3 K vectors.")
 	K_vector = np.concatenate((bK, gK, rK), axis=None)
 	print("[INFO] Preparing for Random Forrest Classification.")
+	loop = True
+	while loop:
+		try:
+			K_vector.remove(0)
+		except ValueError:
+			loop = False
 	print(K_vector)
 	
