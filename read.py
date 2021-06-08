@@ -13,7 +13,7 @@ class Initialize():
 		P = np.zeros(img.shape, np.float32)
 		W = np.zeros(img.shape, np.float32)
 		#Setting K with 1/(N*N).
-		K = np.random.randint(3,size = (N,N)).astype("float32")
+		K = np.random.randint(2,size = (N,N)).astype("float32")
 
 		#setting p0 and coordinates
 		indices = np.where(img != [0])
@@ -26,9 +26,12 @@ class EM():
 	def algorithm(img):
 		SIGMAZERO,R,P,W,K,PZERO,COORDINATES,ALPHA = Initialize.all(img)
 		sigma = SIGMAZERO #Initially 0.5, changes after each Iteration in m-step
+		print("[INFO] Initial Random Kernel Matrix")
 		print(K)
-		for n in range(0, 2): # 2 must be changed to 100 in real case.
-			print(f"In loop {n+1}")
+		iterate = 2
+		print(f"[INFO] Total iteration count: {iterate}")
+		for n in range(0, iterate): 
+			print(f"[INFO] In Iteration {n+1}")
 			#e-step
 			a,b,c,d,e,f,COORDINATES,g = Initialize.all(img)
 			#a,bc,d,e,f,g are all unwanted returns.
@@ -56,7 +59,7 @@ class EM():
 				except IndexError:
 					pass
 
-			print("e-step done")
+			print("[INFO] e-step done.")
 			#m-step
 			a,b,c,d,e,f,COORDINATES,g = Initialize.all(img)
 
@@ -64,7 +67,7 @@ class EM():
 			bsum = np.zeros(shape = (3,3),dtype = np.float32)
 			csum = np.zeros(shape = (3,3),dtype = np.float32)
 			BETA = np.zeros(shape = (3,3),dtype = np.float32)
-			print("m-step starting")
+			print("[INFO] m-step starting.")
 			#program is really slow in the below loop.
 			# In this loop, Kernel Matrix K is remade with newer values (W) that we got from e-step and older Kernel Matrix 
 			for x,y in COORDINATES:
@@ -91,7 +94,7 @@ class EM():
 				for q in range(-ALPHA,ALPHA+1):
 					K[p][q] = (BETA[p][q] - csum[p][q])/bsum[p][q]
 
-			print("m-step progress")
+			print("[INFO] m-step in progress.")
 
 			# Here new Sigma value is generated from W and R.
 			sigsum = 0
@@ -107,8 +110,8 @@ class EM():
 			sigmasqr = sigsum/wsum
 			# new sigma
 			sigma = np.sqrt(sigmasqr)
-			print(sigma)
-			print("m-step done")
+			print("[INFO] Sigma: ",sigma)
+			print("[INFO] m-step done.")
 		# prints the final K vector after iterations
 		return K
 
@@ -133,11 +136,7 @@ class Normal():
 		pixels = asarray(img)
 		pixels = pixels.astype('float32')
 		# 255 is max value. so (any number < 255)/255 => 0 < number < 1
-		#pixels /= 255.0
-		#print(pixels)
-		#print(pixels.mean(),pixels.std())
-		pixels = (pixels)/ pixels.std()
-		#print(pixels)
+		pixels /= 255.0
 		
 		return pixels
 
@@ -151,8 +150,14 @@ if __name__ == '__main__':
 	gnormal = Normal.normalize(g)
 	rnormal = Normal.normalize(r)
 	#calling em algorithm per channel.
+	print("[INFO] Applying EMA for Blue Channel")
 	bK = EM.algorithm(bnormal)
+	print("[INFO] Applying EMA for Green Channel")
 	gK = EM.algorithm(gnormal)
+	print("[INFO] Applying EMA for Red Channel")
 	rK = EM.algorithm(rnormal)
-	K_vector = np.concatenate((bK, dK, rK), axis=None)
+	print("[INFO] Concatnating 3 K vectors.")
+	K_vector = np.concatenate((bK, gK, rK), axis=None)
+	print("[INFO] Preparing for Random Forrest Classification.")
+	print(K_vector)
 	
