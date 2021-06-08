@@ -162,6 +162,8 @@ if __name__ == '__main__':
 	print("[INFO] Concatnating 3 K vectors.")
 	K_vector = np.concatenate((bK, gK, rK), axis=None)
 	print("[INFO] Preparing for Random Forrest Classification.")
+	print("[INFO] Removing 0's from the matrix.")
+	K_vector = K_vector.tolist() #converting np array to list.
 	loop = True
 	while loop:
 		try:
