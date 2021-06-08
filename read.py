@@ -92,6 +92,8 @@ class EM():
 								csum[u][v] = K[u][v] * tsum
 			for p in range(-ALPHA,ALPHA+1):
 				for q in range(-ALPHA,ALPHA+1):
+					if bsum[p][q] == 0:
+						bsum[p][q] = 0.000001
 					K[p][q] = (BETA[p][q] - csum[p][q])/bsum[p][q]
 
 			print("[INFO] m-step in progress.")
