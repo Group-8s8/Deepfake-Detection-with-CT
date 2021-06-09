@@ -37,7 +37,7 @@ class EM():
 		sigma = SIGMAZERO #Initially 0.5, changes after each Iteration in m-step
 		print("[INFO] Initial Random Kernel Matrix")
 		print(K)
-		iterate = 2
+		iterate = 1
 		for n in range(0, iterate): 
 			K[0][0] = 0
 			print(f"[INFO] In Iteration {n+1}")
@@ -191,12 +191,12 @@ class Reader:
 if __name__ == '__main__':
 	# loads image from given path
 	fake = 'data/Fake/fake.png'
-	#real = 'data/Fake/real.png'
+	real = 'data/Fake/real.png'
 	print("[INFO] Performing for fake image.")
 	K_vector = Reader.read(fake)
 	#print(K_vector)
-	#print("[INFO] Performing for real image.")
-	#y = Reader.read(real)
-	y = [1, 1, 1, 1, -62482743296, 1, -62482743296, 1, -62482857984, 1, 0, 61, -188908208128, 0, -2891008966656, 1, -11806789632, 61, 1, 0, 1836, -5780512768, 0, -2211592011776, -5781151232, 0, 1836]
+	print("[INFO] Performing for real image.")
+	gg = Reader.read(real)
+	y = [int(item) for item in gg]
 	print("[INFO] Preparing for Random Forrest Classification.")
 	Classifier.classify(K_vector,y)
