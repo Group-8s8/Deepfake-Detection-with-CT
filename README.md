@@ -11,10 +11,14 @@
 * Comment where possible.
 * Write codes into `/utils`. except main.
 
+## How to run?
+---------------
+
+* Run `pip install -r requirements.txt`.
+* Run `python run.py -f <path_to_fake_image> -r <path_to_real_image>`
+	* `-r` argument is optional.
+
 ## ToDo.
-- [*] Equation 3 and Bayes.
-- [*] Equation 1.
-- [] Check if the current equations are correct and bounds are set correctly.
-- [] More equations.
-- [] EM Algorithm.
-- [] Classifier
+--------
+
+- Optimize the code.
