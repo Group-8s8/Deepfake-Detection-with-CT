@@ -17,6 +17,14 @@
 * Run `pip install -r requirements.txt`.
 * Run `python run.py -f <path_to_fake_image> -r <path_to_real_image>`
 	* `-r` argument is optional.
+	* eg: `python run.py -f data/Fake/fake.png`.
+
+* To increase accuracy. increase iteration at `utils/EM.py:29`
+
+## Expected output with iteration = 1
+-------------------------------------
+
+[!image](assets/output.png)
 
 ## ToDo.
 --------
