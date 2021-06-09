@@ -24,7 +24,7 @@
 ## Expected output with iteration = 1
 -------------------------------------
 
-[!image](assets/output.png)
+![image](assets/output.png)
 
 ## ToDo.
 --------
