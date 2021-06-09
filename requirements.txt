@@ -2,4 +2,3 @@ EssentialCV
 Pillow
 scipy
 sklearn
-pandas
