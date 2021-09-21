@@ -1,4 +1,4 @@
-# Deepfake-Detection-with-CT
+# Deepfake-Detection-with-CT - Public
 -----------------------------
 
 * This is the main program. When you commit something, do so in another branch. I will review and pull them later.
